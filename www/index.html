@@ -1,58 +1,58 @@
+
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>ZIM Frame - Fit Template</title>
+<title>Heroes vs. Villains</title>
 
-<!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz! 				-->
-<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com -->
-<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
-<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+<link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 
-<!-- as of ZIM 4.3.0 load createjs namespace first -->
-<script src="js/createjs-2015.11.26.min.js"></script>
-<script>var zon = true; // true for comments from zim code</script>
-<script src="js/zim_4.8.0.js"></script>
-<!-- use zimjs.com/code/distill for minified individual functions! -->
+<script>var zon = true;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+<script src="http://d309knd7es5f10.cloudfront.net/zimserver_urls.js"></script>
+<script src="http://d309knd7es5f10.cloudfront.net/zimsocket_1.0.js"></script>
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_4.8.1.js"></script>
+
+<script src="remote/view.js"></script>
+<script src="remote/data.js"></script>
+<script src="remote/control.js"></script>
 
 <style>
-	body {background-color:#000;}
+	body {margin:0px; padding:0px; background-color:#000;}
+	#myCanvas {position:absolute; background-color:#000;}
 </style>
 
 <script>
-
-// SCALING OPTIONS
-// scaling can have values as follows with full being the default
-// "fit"		sets canvas and stage to dimensions and scales to fit inside window size
-// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
-// "full"		sets stage to window size with no scaling
-// "tagID"		add canvas to HTML tag of ID - set to dimensions if provided - no scaling
-
-var scaling = "fit"; // fit scales to fit the browser window while keeping the aspect ratio
-var width = 1080; // can go higher...
-var height = 1920;
-var color = "#acd241";
-var frame = new zim.Frame(scaling, width, height, color); // see docs for more options and info
+var scaling = "fit";
+var width = 640;
+var height = 960;
+var color = "#000";
+var frame = new zim.Frame(scaling, width, height, color);
 frame.on("ready", function() {
-	zog("ready from ZIM Frame");
-
 	var stage = frame.stage;
 	var stageW = frame.width;
 	var stageH = frame.height;
 
-	// put your code here (you can delete this code)
+	frame.loadAssets(["remote.jpg"], "assets/");
+	
+	frame.on("complete", function() {
 
-    var circle = new zim.Circle(100, frame.pink)
-        .center(stage)
-        .drag();
-    
-	stage.update(); // update the stage to see any changes
+		var server = zimSocketURL;
+		var appName = "faceOff";
+
+		var view = remote.makeView(frame);
+		var data = remote.makeData(view, server, appName);
+		var remo = remote.makeControl(view, data);
+
+
+	}); // end of loading assets
+	stage.update();
 
 }); // end of ready
 </script>
 </head>
 
 <body>
-<!-- canvas with id="myCanvas" is made by zim Frame -->
 </body>
 </html>
